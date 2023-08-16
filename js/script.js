@@ -10,7 +10,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(myMap);
 
 // Use this link to get the GeoJSON data.
-let link = "./data/countries.geojson";
+let link = "data/countries.geojson";
 
 // The function that will determine the color of a neighborhood based on the borough that it belongs to
 function chooseColor(Continent) {
@@ -58,60 +58,68 @@ d3.json(link).then(function(data) {
         // When a feature (neighborhood) is clicked, it enlarges to fit the screen.
         click: function(event) {
           myMap.fitBounds(event.target.getBounds());
+          let selected_country = feature.properties.Country;
+          //console.log(selected_country);
+          bubblechart(selected_country);
+          barchart(selected_country);
         }
       });
       // Giving each feature a popup with information that's relevant to it
       layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>");
-
+;  
     }
   }).addTo(myMap);
-});
+  });
+  
+
 
 //sample chart 1
-var trace1 = {
-  x: [1, 2, 3, 4],
-  y: [10, 11, 12, 13],
-  mode: 'markers',
-  marker: {
-    size: [40, 60, 80, 100]
-  }
-};
+function bubblechart(selected_country){
+    var trace1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 11, 12, 13],
+      mode: 'markers',
+      marker: {
+        size: [40, 60, 80, 100]
+      }
+    };
 
-var data = [trace1];
+    var data = [trace1];
 
-var layout = {
-  title: 'Marker Size',
-  showlegend: false,
-  height: 300,
-  width: 600
-};
+    var layout = {
+      title: selected_country,
+      showlegend: false,
+      height: 300,
+      width: 600
+    };
 
-Plotly.newPlot('bubble-chart', data, layout)
-
+    Plotly.newPlot('bubble-chart', data, layout)
+}
 
 //sample chart 2 use 
-var trace1 = {
-  x: ['giraffes', 'orangutans', 'monkeys'],
-  y: [20, 14, 23],
-  name: 'SF Zoo',
-  type: 'bar'
-};
 
-var trace2 = {
-  x: ['giraffes', 'orangutans', 'monkeys'],
-  y: [12, 18, 29],
-  name: 'LA Zoo',
-  type: 'bar'
-};
+function barchart(selected_country){
+    var trace1 = {
+      x: ['giraffes', 'orangutans', 'monkeys'],
+      y: [20, 14, 23],
+      name: 'SF Zoo',
+      type: 'bar'
+    };
 
-var data = [trace1, trace2];
+    var trace2 = {
+      x: ['giraffes', 'orangutans', 'monkeys'],
+      y: [12, 18, 29],
+      name: 'LA Zoo',
+      type: 'bar'
+    };
 
-var layout = {
-  barmode: 'group', 
-  width: 600, 
-  height: 300, 
-  };
+    var data = [trace1, trace2];
 
-Plotly.newPlot('bar-chart', data, layout);
+    var layout = {
+      barmode: 'group', 
+      width: 600, 
+      height: 300, 
+      };
 
-
+    Plotly.newPlot('bar-chart', data, layout);
+  }
