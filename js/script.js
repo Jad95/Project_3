@@ -65,11 +65,10 @@ d3.json(link).then(function(data) {
         }
       });
       // Giving each feature a popup with information that's relevant to it
-      layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>");
-;  
+      layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>"); 
     }
   }).addTo(myMap);
-  });
+});
   
 
 
