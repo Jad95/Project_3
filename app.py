@@ -48,7 +48,7 @@ def home():
     print("Server received request for 'Home' page...")
     return (f"Project 3 API<br/>"
             f"Available routes:<br/>"
-            f"/api/v1.0/country_geojson  (This is the link for the geojson of the countries)<br/>"
+            f"/api/v1.0/countries_geojson  (This is the link for the geojson of the countries)<br/>"
             f"/api/v1.0/countries<br/>"
             f"/api/v1.0/country_data/(country_name)<br/>"
             f"/api/v1.0/country_data/(country_name)/(data)<br/>"
@@ -75,13 +75,13 @@ def country_all_data(country_name):
     session = Session(engine)
 
     # These are the columns we want for the graph. 
-    want_columns = ['country', 'year', 'access_to_elec', 'elec_from_renew',
+    want_columns = ['country', 'year', 'access_to_elec', 'elec_from_fossil', 'elec_from_renew',
                  'low_carbon_elec', 'co2_emissions', 'primary_energy_cons']
     if country_name in all_countries:
 
         # Query for the country and its data on the database
         country = session.query(Energy_table.country).filter(Energy_table.country == country_name).distinct().all()[0][0]
-        results = session.query(Energy_table.country, Energy_table.year, Energy_table.access_to_elec,
+        results = session.query(Energy_table.country, Energy_table.year, Energy_table.access_to_elec, Energy_table.elec_from_fossil,
         Energy_table.elec_from_renew, Energy_table.low_carbon_elec, Energy_table.co2_emissions,
         Energy_table.primary_energy_cons).filter(Energy_table.country == country_name).all()
 
@@ -127,6 +127,24 @@ def country_data(country_name, data):
         country_data = [{country: {'access_to_elec': {}}}]
         for row in results:
             country_data[0][country]['access_to_elec'][row[1]] = row[2]
+        return jsonify(country_data)
+
+    elif (data == 'elec_from_fossil') and (country_name in all_countries):
+        # Create our session (link) from Python to the DB
+        session = Session(engine)
+
+        # Query the country name and the results for which data is chosen
+        country = session.query(Energy_table.country).filter(Energy_table.country == country_name).distinct().all()[0][0]
+        results = session.query(Energy_table.country, Energy_table.year, Energy_table.elec_from_fossil).\
+        filter(Energy_table.country == country_name).all()
+
+        # Close the session
+        session.close
+
+        # Create a list of dictionaries to jsonify the data
+        country_data = [{country: {'elec_from_fossil': {}}}]
+        for row in results:
+            country_data[0][country]['elec_from_fossil'][row[1]] = row[2]
         return jsonify(country_data)
 
     elif (data == 'elec_from_renew') and (country_name in all_countries):
