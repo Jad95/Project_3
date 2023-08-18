@@ -6,6 +6,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
+import json
+
+# Opens the geojson file for the countries and saves it into countries_geojson
+with open('data/countries.geojson') as f:
+   countries_geojson = json.load(f)
 
 # Database setup
 engine = create_engine("sqlite:///data/energy.db")
@@ -43,6 +48,7 @@ def home():
     print("Server received request for 'Home' page...")
     return (f"Project 3 API<br/>"
             f"Available routes:<br/>"
+            f"/api/v1.0/country_geojson  (This is the link for the geojson of the countries)<br/>"
             f"/api/v1.0/countries<br/>"
             f"/api/v1.0/country_data/(country_name)<br/>"
             f"/api/v1.0/country_data/(country_name)/(data)<br/>"
@@ -57,6 +63,10 @@ def home():
 def countries():
     # Print out all the countries
     return jsonify(all_countries)
+
+@app.route("/api/v1.0/countries_geojson")
+def country_geojson():
+    return jsonify(countries_geojson)
 
 @app.route("/api/v1.0/country_data/<country_name>")
 def country_all_data(country_name):
