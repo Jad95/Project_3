@@ -1,63 +1,72 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Project 3 - Global Sustainable Energy</title>
-    <style>
-      body{
-      background-image: url('https://www.unescap.org/sites/default/d8files/2020-06/iStock-518613574-3_cr.png'); /* Set the path to your image */
-      background-size: cover; /* Adjust how the image covers the background */
- 
-      }
-    </style>
-    
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
 
-    <!-- Leaflet JavaScript code -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
+<head>
+  <meta charset="UTF-8">
+  <title>Project 3 - Global Sustainable Energy</title>
+  <style>
+    body {
+      background-image: url('https://www.unescap.org/sites/default/d8files/2020-06/iStock-518613574-3_cr.png');
+      /* Set the path to your image */
+      background-size: cover;
+      /* Adjust how the image covers the background */
 
-    <!-- D3 library -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    }
+  </style>
 
-  </head>
-  <body>
-    
-    <div class="row">
-      <div class="title-head">
-        <div class="text-head">
-          <h1>Global Sustainable Energy</h1>
-          <p>Any Text ------------</p>
-          <p>Any Text ---------------</p>
-        </div>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Leaflet JavaScript code -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- D3 library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+<body>
+
+  <div class="row">
+    <div class="title-head">
+      <div class="text-head">
+        <h1>Global Sustainable Energy</h1>
+        <p>Any Text ------------</p>
+        <p>Any Text ---------------</p>
       </div>
     </div>
+  </div>
 
 
-    <div id="map-container">
-      <div id='map'>
-      </div>
+  <div id="map-container">
+    <div id='map'>
     </div>
-    
-    <div class="col-md-5">
-      <div id="bubble-chart"></div>
-    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div id="bubble-chart"></div>
+  </div>
   </div>
 
   <div class="col-md-5">
     <div id="bar-chart"></div>
   </div>
-</div>
+  </div>
 
-    <!-- JavaScript file -->
-    <script type="text/javascript" src="js/script.js"></script>
+  <div id="energy-access-chart">
+    id="country-dropdown">
+    <select id="country-selector"></select>
+  </div>
 
-  </body>
+  <!-- JavaScript file -->
+  <script type="text/javascript" src="/js/script.js"></script>
+  <script type="text/javascript" src="/js/linegraph.js"></script>
+
+</body>
+
 </html>
