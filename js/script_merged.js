@@ -4,14 +4,25 @@ let myMap = L.map("map", {
   zoom: 1
 });
 
+
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myMap);
 
-// Use this link to get the GeoJSON data.
+
+
+// Use this link to get the GeoJSON data. This makes use of the data from the Flask API
 let link = "http://127.0.0.1:5000/api/v1.0/countries_geojson";
 let dataLink = "http://127.0.0.1:5000/api/v1.0/data"
+
+
+
+// Uncomment if you want to use the local files
+// let link = "http://127.0.0.1:5000/api/v1.0/countries_geojson";
+// let dataLink = "http://127.0.0.1:5000/api/v1.0/data"
+
+
 
 // The function that will determine the color of a neighborhood based on the borough that it belongs to
 function chooseColor(Continent) {
@@ -24,14 +35,17 @@ function chooseColor(Continent) {
   else return "white";
 }
 
+
+
 // Getting our GeoJSON data
 d3.json(link).then(function (data) {
-  // Creating a GeoJSON layer with the retrieved data
 
   // Initialize graphs
   initialCountry = "Canada"
   updateLineGraph(initialCountry)
   barchart(initialCountry)
+
+  // Creating a GeoJSON layer with the retrieved data
   L.geoJson(data, {
     // Styling each feature (in this case, a neighborhood)
     style: function (feature) {
@@ -43,6 +57,8 @@ d3.json(link).then(function (data) {
         weight: 1.5
       };
     },
+
+
     // This is called on each feature.
     onEachFeature: function (feature, layer) {
       // Set the mouse events to change the map styling.
@@ -54,6 +70,8 @@ d3.json(link).then(function (data) {
             fillOpacity: 0.9
           });
         },
+
+
         // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
         mouseout: function (event) {
           layer = event.target;
@@ -61,6 +79,8 @@ d3.json(link).then(function (data) {
             fillOpacity: 0.5
           });
         },
+
+
         // When a feature (neighborhood) is clicked, it enlarges to fit the screen.
         click: function (event) {
           myMap.fitBounds(event.target.getBounds());
@@ -72,6 +92,7 @@ d3.json(link).then(function (data) {
           barchart(selected_country);
         }
       });
+
 
       // Giving each feature a popup with information that's relevant to it
       layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>");
@@ -85,7 +106,8 @@ d3.json(link).then(function (data) {
 /////////////////////////////////// Function for line graph ///////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// This code was commented off to work with the country selection by clicking on the map
+// The code below was commented off to work with the country selection by clicking on the map
+
 // Extract relevant data for the selected country
 
 // let countryData = data.find(country => country.country === "Canada");
@@ -103,6 +125,7 @@ d3.json(link).then(function (data) {
 //     let selectedCountry = this.value;
 //     updateLineGraph(selectedCountry);
 // });
+
 
 function updateLineGraph(selectedCountry) {
   // Fetch the selected country's data from energy.json
@@ -147,9 +170,11 @@ function updateLineGraph(selectedCountry) {
   });
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////// Function for bar graph ////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 
 function barchart(selected_country){
   d3.json(dataLink).then(function(data) {
@@ -207,53 +232,3 @@ function barchart(selected_country){
     Plotly.newPlot('bar-chart', data, layout);
   });
 }
-//sample chart 1
-// function bubblechart(selected_country){
-//     var trace1 = {
-//       x: [1, 2, 3, 4],
-//       y: [10, 11, 12, 13],
-//       mode: 'markers',
-//       marker: {
-//         size: [40, 60, 80, 100]
-//       }
-//     };
-
-//     var data = [trace1];
-
-//     var layout = {
-//       title: selected_country,
-//       showlegend: false,
-//       height: 300,
-//       width: 600
-//     };
-
-//     Plotly.newPlot('bubble-chart', data, layout)
-// }
-
-//sample chart 2 use 
-
-// function barchart(selected_country) {
-//   var trace1 = {
-//     x: ['giraffes', 'orangutans', 'monkeys'],
-//     y: [20, 14, 23],
-//     name: 'SF Zoo',
-//     type: 'bar'
-//   };
-
-//   var trace2 = {
-//     x: ['giraffes', 'orangutans', 'monkeys'],
-//     y: [12, 18, 29],
-//     name: 'LA Zoo',
-//     type: 'bar'
-//   };
-
-//   var data = [trace1, trace2];
-
-//   var layout = {
-//     barmode: 'group',
-//     width: 600,
-//     height: 300,
-//   };
-
-//   Plotly.newPlot('bar-chart', data, layout);
-// }
