@@ -13,14 +13,14 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 // Use this link to get the GeoJSON data. This makes use of the data from the Flask API
-let link = "data/countries.geojson";
-let dataLink = "data/energy.json"
+let link = "http://127.0.0.1:5000/api/v1.0/countries_geojson";
+let dataLink = "http://127.0.0.1:5000/api/v1.0/data"
 
 
 
 // Uncomment if you want to use the local files
-// let link = "http://127.0.0.1:5000/api/v1.0/countries_geojson";
-// let dataLink = "http://127.0.0.1:5000/api/v1.0/data"
+// let link = "data/countries.geojson";
+// let dataLink = "data/energy.json"
 
 
 
