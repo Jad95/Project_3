@@ -129,7 +129,7 @@ d3.json(link).then(function (data) {
 
 function updateLineGraph(selectedCountry) {
   // Fetch the selected country's data from energy.json
-  d3.json("http://127.0.0.1:5000/api/v1.0/data").then(function (data) {
+  d3.json(dataLink).then(function (data) {
     countryData = data.find(country => country.country === selectedCountry);
 
     // Extract years and energy access values
