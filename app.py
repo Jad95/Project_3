@@ -49,7 +49,8 @@ def home():
     return (f"Project 3 API<br/>"
             f"Available routes:<br/>"
             f"/api/v1.0/countries_geojson  (This is the link for the geojson of the countries)<br/>"
-            f"/api/v1.0/countries<br/>"
+            f"/api/v1.0/data  (Complete data for all countries)<br/>"
+            f"/api/v1.0/countries  (List of all countries)<br/>"
             f"/api/v1.0/country_data/(country_name)<br/>"
             f"/api/v1.0/country_data/(country_name)/(data)<br/>"
             "Options for data:<br/>"
@@ -67,6 +68,43 @@ def countries():
 @app.route("/api/v1.0/countries_geojson")
 def country_geojson():
     return jsonify(countries_geojson)
+
+@app.route("/api/v1.0/data")
+def all_data():
+
+    complete_country_data = []
+
+    for country_name in all_countries:
+        # Create our session (link) from Python to the DB
+        session = Session(engine)
+
+        # These are the columns we want for the graph. 
+        want_columns = ['country', 'year', 'access_to_elec', 'elec_from_fossil', 'elec_from_renew',
+                    'low_carbon_elec', 'co2_emissions', 'primary_energy_cons']
+
+        # Query for the country and its data on the database
+        country = session.query(Energy_table.country).filter(Energy_table.country == country_name).distinct().all()[0][0]
+        results = session.query(Energy_table.country, Energy_table.year, Energy_table.access_to_elec, Energy_table.elec_from_fossil,
+        Energy_table.elec_from_renew, Energy_table.low_carbon_elec, Energy_table.co2_emissions,
+        Energy_table.primary_energy_cons).filter(Energy_table.country == country_name).all()
+
+        # Close the session
+        session.close()
+
+        # Create a dictionary to jsonify for the API
+        country_data = {'country': country, 'year': {}}
+        for row in results:
+            # row[1] is the year
+            country_data['year'][str(row[1])] = {}
+
+            # We start at 2 as the first 2 elements of the list are the country name and the year
+            for i in range(2,len(row)):
+                country_data['year'][str(row[1])][want_columns[i]] = float(row[i])
+
+        complete_country_data.append(country_data)
+
+    return jsonify(complete_country_data)
+
 
 @app.route("/api/v1.0/country_data/<country_name>")
 def country_all_data(country_name):
