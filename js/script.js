@@ -126,7 +126,7 @@ function barchart(selected_country){
     var data = [trace1, trace2];
   
     var layout = {
-      title: selected_country,
+      title: 'Electricity Generated: Fossil Fuels vs. Renewable',
       yaxis: {
         title: 'Terawatt hour (TWh)'
       }
