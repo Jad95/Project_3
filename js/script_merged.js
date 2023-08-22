@@ -177,6 +177,7 @@ function resetHighlight(e) {
 
 function barchart(selected_country) {
   d3.json(dataLink).then(function (data) {
+    // console.log(data)
     let years = Object.keys(data[0].year);
     let fossil_list = [];
     let renew_list = [];
@@ -192,9 +193,9 @@ function barchart(selected_country) {
       }
     }
 
-    //console.log(selected_country);
-    //console.log(fossil_list);
-    //console.log(renew_list);
+    // console.log(selected_country);
+    // console.log(fossil_list);
+    // console.log(renew_list);
 
     // Create chart
     var trace1 = {
@@ -223,6 +224,9 @@ function barchart(selected_country) {
 
     var layout = {
       title: 'Electricity Generated: Fossil Fuels vs. Renewable',
+      xaxis: {
+        title: 'Year'
+      },
       yaxis: {
         title: 'Terawatt hour (TWh)'
       }
