@@ -11,7 +11,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(myMap);
 
 
-
 // Use this link to get the GeoJSON data. This makes use of the data from the Flask API
 let link = "http://127.0.0.1:5000/api/v1.0/countries_geojson";
 let dataLink = "http://127.0.0.1:5000/api/v1.0/data"
@@ -24,17 +23,20 @@ let dataLink = "http://127.0.0.1:5000/api/v1.0/data"
 
 
 
-// The function that will determine the color of a neighborhood based on the borough that it belongs to
-function chooseColor(Continent) {
-  if (Continent == "Asia") return "yellow";
-  else if (Continent == "North America") return "red";
-  else if (Continent == "South America") return "Blue";
-  else if (Continent == "Africa") return "green";
-  else if (Continent == "Europe") return "purple";
-  else if (Continent == "Oceania") return "lightblue";
-  else return "white";
-}
 
+
+// The function that will determine the color of a neighborhood based on the borough that it belongs to
+
+function chooseColor(Continent) {
+  return Continent == "Asia" ? "yellow" :
+          Continent == "North America"  ? "red" :
+          Continent == "South America"  ? "Blue" :
+          Continent == "Africa"  ? "green" :
+          Continent == "Europe" ? "purple" :
+          Continent == "Oceania" ? "lightblue" :
+          Continent == "Antartica" ? "white" :
+                    "lightgray";
+}
 
 
 // Getting our GeoJSON data
@@ -63,23 +65,13 @@ d3.json(link).then(function (data) {
     onEachFeature: function (feature, layer) {
       // Set the mouse events to change the map styling.
       layer.on({
-        // When a user's mouse cursor touches a map feature, the mouseover event calls this function, which makes that feature's opacity change to 90% so that it stands out.
-        mouseover: function (event) {
-          layer = event.target;
-          layer.setStyle({
-            fillOpacity: 0.9
-          });
-        },
+        /* When a user's mouse cursor touches a map feature, the mouseover
+        event calls this function, which makes that feature's opacity change to 90% so that it stands out. */
+        mouseover: highlightFeature,
 
-
-        // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
-        mouseout: function (event) {
-          layer = event.target;
-          layer.setStyle({
-            fillOpacity: 0.5
-          });
-        },
-
+        /* When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), 
+        the feature's opacity reverts back to 50%. */
+        mouseout: resetHighlight,
 
         // When a feature (neighborhood) is clicked, it enlarges to fit the screen.
         click: function (event) {
@@ -95,11 +87,13 @@ d3.json(link).then(function (data) {
 
 
       // Giving each feature a popup with information that's relevant to it
-      layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>");
+      layer.bindPopup("<h2>" + feature.properties.Country + "</h2> <hr> <h4> Continent: " + feature.properties.Continent + "</h4>" +
+      "<h4> Country Code: " + feature.properties.ISO_A3 + "</h4>");
       ;
     }
   }).addTo(myMap);
 }
+
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,6 +165,79 @@ function updateLineGraph(selectedCountry) {
 }
 
 
+/* Creating a Legend for Continent */
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (myMap) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = ["Asia","North America","South America", "Africa","Europe","Oceania","Antartica"],
+        labels = [];
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + chooseColor(grades[i]) + '"></i> ' +
+            grades[i] + '<br>';
+    }
+
+    return div;
+};
+
+legend.addTo(myMap); 
+
+/*asdfasd*/
+var info = L.control();
+
+info.onAdd = function (myMap) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>Country on cursor</h4>' +  (props ?
+        '<b>' + props.Country + '</b><br />'
+        : 'Hover over a country');
+};
+
+info.addTo(myMap);
+
+
+
+function highlightFeature(e) {
+  var layer = e.target;
+
+  layer.setStyle({
+      color: '#666',
+      dashArray: '',
+      fillOpacity: 0.9
+  });
+
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+      layer.bringToFront();
+  }
+
+  info.update(layer.feature.properties);
+}
+
+function resetHighlight(e) {
+  var layer = e.target;
+
+  layer.setStyle({
+      color: 'white',
+      dashArray: '',
+      fillOpacity: 0.5
+  });
+
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+      layer.bringToFront();
+  }
+
+  info.update(layer.feature.properties);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////// Function for bar graph ////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,9 +260,9 @@ function barchart(selected_country){
       }
     }
     
-    console.log(selected_country);
-    console.log(fossil_list);
-    console.log(renew_list);
+    //console.log(selected_country);
+    //console.log(fossil_list);
+    //console.log(renew_list);
   
     // Create chart
     var trace1 = {
@@ -223,7 +290,7 @@ function barchart(selected_country){
     var data = [trace1, trace2];
   
     var layout = {
-      title: 'Electricity Generated: Fossil Fuels vs. Renewable',
+      title: selected_country,
       yaxis: {
         title: 'Terawatt hour (TWh)'
       }
@@ -232,3 +299,4 @@ function barchart(selected_country){
     Plotly.newPlot('bar-chart', data, layout);
   });
 }
+
