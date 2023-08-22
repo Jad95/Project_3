@@ -235,7 +235,7 @@ function resetHighlight(e) {
       layer.bringToFront();
   }
 
-  info.update(layer.feature.properties);
+  info.update();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
