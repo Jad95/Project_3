@@ -1,11 +1,9 @@
-
-
 #map {
   position: absolute;
   top: 20%;
   left:2%;
   bottom: 0%;
-  height: 50%;
+  height: 77%;
   width: 50%;
 }
 #line-graph {
@@ -19,26 +17,11 @@
 
 #bar-chart {
   position: absolute;
-  top: 20%;
+  top: 60%;
   left: 55%;
   bottom: 0%;
   height: 35%;
   width: 40%;
-}
-
-#energy-access-chart {
-  position: absolute;
-  top: 70%;
-  left: 2%;
-  bottom: 80%;
-  width: 50%;
-  height: 50%;
-}
-
-#country-selector {
-  position: absolute;
-  bottom: 90%;
-  left: 0%;
 }
 
 .text-head {
