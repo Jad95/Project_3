@@ -248,10 +248,10 @@ function co2chart(selected_country){
     let co2 = [];
 
 
-    for (let i=0; i<data.length; i++) {
+    for (let a=0; a<data.length; a++) {
       // Determine which country's data you will access
       if(data[a].country == selected_country) {
-        for (let b=0; j<years.length; b++) {
+        for (let b=0; b<years.length; b++) {
           co2.push(data[a].year[years[b]].co2_emissions);
         }
         break
@@ -275,3 +275,63 @@ function co2chart(selected_country){
     Plotly.newPlot("co2chart", data, layout);
   });
 };
+
+/////////////co2emision created using ChartJS
+//Plot created using Chartjs   
+// Fetch and update the chart
+function co2chart(selected_country) {
+  fetch(dataLink)
+    .then(response => response.json())
+    .then(data => {
+      let years = Object.keys(data[0].year);
+      let co2 = [];
+
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].country === selected_country) {
+          for (let j = 0; j < years.length; j++) {
+            co2.push(data[i].year[years[j]].co2_emissions);
+          }
+          break;
+        }
+      }
+
+      // Create a horizontal bar chart using Chart.js
+      var ctx = document.getElementById('co2chart').getContext('2d');
+      var chart = new chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+          labels: years,
+          datasets: [{
+            label: 'CO2 Emissions in kt',
+            data: co2,
+            backgroundColor: 'rgba(54, 162, 235, 0.8)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'kt'
+              }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Year'
+              }
+            }]
+          }
+        }
+      });
+    })
+  };
