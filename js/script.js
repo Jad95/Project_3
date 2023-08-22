@@ -60,78 +60,66 @@ d3.json(link).then(function(data) {
           myMap.fitBounds(event.target.getBounds());
           let selected_country = feature.properties.Country;
           //console.log(selected_country);
+          bubblechart(selected_country);
           barchart(selected_country);
         }
       });
       // Giving each feature a popup with information that's relevant to it
-      layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>"); 
+      layer.bindPopup("<h1>" + feature.properties.Country + "</h1> <hr> <h2>" + feature.properties.ISO_A3 + "</h2>");
+;  
     }
   }).addTo(myMap);
-});
+  });
   
 
 
+//sample chart 1
+function bubblechart(selected_country){
+    var trace1 = {
+      x: [1, 2, 3, 4],
+      y: [10, 11, 12, 13],
+      mode: 'markers',
+      marker: {
+        size: [40, 60, 80, 100]
+      }
+    };
 
-// Fossil Fuel vs Renewable Energy Bar Chart 
-let enerLink = "./data/energy.json";
+    var data = [trace1];
 
-d3.json(enerLink).then(function(data) {
-  console.log(data);
-});
+    var layout = {
+      title: selected_country,
+      showlegend: false,
+      height: 300,
+      width: 600
+    };
+
+    Plotly.newPlot('bubble-chart', data, layout)
+}
+
+//sample chart 2 use 
 
 function barchart(selected_country){
-  d3.json(enerLink).then(function(data) {
-    let years = Object.keys(data[0].year);
-    let fossil_list = [];
-    let renew_list = [];
-    
-    for (let i=0; i<data.length; i++) {
-      // Determine which country's data you will access
-      if(data[i].country == selected_country) {
-        for (let j=0; j<years.length; j++) {
-          fossil_list.push(data[i].year[years[j]].elec_from_fossil);
-          renew_list.push(data[i].year[years[j]].elec_from_renew);
-        }
-        break
-      }
-    }
-    
-    console.log(selected_country);
-    console.log(fossil_list);
-    console.log(renew_list);
-  
-    // Create chart
     var trace1 = {
-      x: years,
-      y: fossil_list,
-      type: 'bar',
-      name: 'Fossil Fuel',
-      marker: {
-        color: 'rgb(0,0,0)',
-        opacity: 0.5
-      }
+      x: ['giraffes', 'orangutans', 'monkeys'],
+      y: [20, 14, 23],
+      name: 'SF Zoo',
+      type: 'bar'
     };
 
     var trace2 = {
-      x: years,
-      y: renew_list,
-      type: 'bar',
-      name: 'Renewable',
-      marker: {
-        color: 'rgb(84,239,7)',
-        opacity: 0.5
-      }
+      x: ['giraffes', 'orangutans', 'monkeys'],
+      y: [12, 18, 29],
+      name: 'LA Zoo',
+      type: 'bar'
     };
-  
+
     var data = [trace1, trace2];
-  
+
     var layout = {
-      title: 'Electricity Generated: Fossil Fuels vs. Renewable',
-      yaxis: {
-        title: 'Terawatt hour (TWh)'
-      }
-    };
-  
+      barmode: 'group', 
+      width: 600, 
+      height: 300, 
+      };
+
     Plotly.newPlot('bar-chart', data, layout);
-  });
-}
+  }
