@@ -238,45 +238,47 @@ function barchart(selected_country){
 ///////////////////////// Function for CO2 graph (Plotly) ////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-d3.json(dataLink).then(function(data) {
-  console.log(data);
-});
+// d3.json(dataLink).then(function(data) {
+//   console.log(data);
+// });
 
-function co2chart(selected_country){
-  d3.json(dataLink).then(function(data) {
-    let years = Object.keys(data[0].year);
-    let co2 = [];
+// function co2chart(selected_country){
+//   d3.json(dataLink).then(function(data) {
+//     let years = Object.keys(data[0].year);
+//     let co2 = [];
 
 
-    for (let a=0; a<data.length; a++) {
-      // Determine which country's data you will access
-      if(data[a].country == selected_country) {
-        for (let b=0; b<years.length; b++) {
-          co2.push(data[a].year[years[b]].co2_emissions);
-        }
-        break
-      }
-    }
-    //Create chart
-    var trace = {
-      x: years,
-      y: co2,
-      name: "CO2 Emision in kt",
-      type: "bar",
-    };
-    var data = [trace];
-    var layout = {
-      title: "CO2 Emision per Year",
-      yaxis: {
-        title: 'kt'
-      }
-    };
+//     for (let a=0; a<data.length; a++) {
+//       // Determine which country's data you will access
+//       if(data[a].country == selected_country) {
+//         for (let b=0; b<years.length; b++) {
+//           co2.push(data[a].year[years[b]].co2_emissions);
+//         }
+//         break
+//       }
+//     }
+//     //Create chart
+//     var trace = {
+//       x: years,
+//       y: co2,
+//       name: "CO2 Emision in kt",
+//       type: "bar",
+//     };
+//     var data = [trace];
+//     var layout = {
+//       title: "CO2 Emision per Year",
+//       yaxis: {
+//         title: 'kt'
+//       }
+//     };
   
-    Plotly.newPlot("co2chart", data, layout);
-  });
-};
+//     Plotly.newPlot("co2chart", data, layout);
+//   });
+// };
 
-/////////////co2emision created using ChartJS
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////// Function for CO2 graph (Chartjs) ////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
 //Plot created using Chartjs   
 // Fetch and update the chart
 function co2chart(selected_country) {
@@ -297,15 +299,13 @@ function co2chart(selected_country) {
 
       // Create a horizontal bar chart using Chart.js
       var ctx = document.getElementById('co2chart').getContext('2d');
-      var chart = new chart(ctx, {
-        type: 'horizontalBar',
+      var chart = new Chart(ctx, {
+        type: 'bar',
         data: {
           labels: years,
           datasets: [{
             label: 'CO2 Emissions in kt',
             data: co2,
-            backgroundColor: 'rgba(54, 162, 235, 0.8)',
-            borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 1
           }]
         },

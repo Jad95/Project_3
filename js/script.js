@@ -181,10 +181,10 @@ function co2chart(selected_country) {
         }
       }
 
-      // Create a horizontal bar chart using Chart.js
+      // Create a bar chart using Chart.js
       var ctx = document.getElementById('co2chart').getContext('2d');
-      var chart = new chart(ctx, {
-        type: 'horizontalBar',
+      var chart = new Chart(ctx, {
+        type: 'bar',
         data: {
           labels: years,
           datasets: [{
