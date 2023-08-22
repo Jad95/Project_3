@@ -123,3 +123,42 @@ function barchart(selected_country){
 
     Plotly.newPlot('bar-chart', data, layout);
   }
+
+  //CO2 Emision vs Year per Country Using Plotly 
+  d3.json(dataLink).then(function(data) {
+    console.log(data);
+  });
+  
+  function co2chart(selected_country){
+    d3.json(dataLink).then(function(data) {
+      let years = Object.keys(data[0].year);
+      let co2 = [];
+  
+  
+      for (let i=0; i<data.length; i++) {
+        // Determine which country's data you will access
+        if(data[a].country == selected_country) {
+          for (let b=0; j<years.length; b++) {
+            co2.push(data[a].year[years[b]].co2_emissions);
+          }
+          break
+        }
+      }
+      //Create chart
+      var trace = {
+        x: years,
+        y: co2,
+        name: "CO2 Emision in kt",
+        type: "bar",
+      };
+      var data = [trace];
+      var layout = {
+        title: "CO2 Emision per Year",
+        yaxis: {
+          title: 'kt'
+        }
+      };
+    
+      Plotly.newPlot("co2chart", data, layout);
+    });
+  };
