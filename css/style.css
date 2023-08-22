@@ -61,17 +61,20 @@
 .text-head {
   text-align: center;
   /* -webkit-text-stroke: 1px rgb(0, 0, 0); */
-  color:rgb(42, 0, 194);
-  text-shadow: dimgrey;
-  text-decoration-line:inherit;
+  color:rgb(6, 44, 1);
+  
+  text-shadow: rgb(0, 67, 7);
+  /*text-decoration-line:inherit;*/
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  /*background-image: url(https://uwaterloo.ca/science/sites/ca.science/files/resize/uploads/images/sustainable-energy-solutions_0-1200x800.jpg)*/;
+  background-size:cover;
+  
   }
 .title-head {
-  /* background-image: url(https://www.oceanblocks.org/assets/uploads/2021/01/Green-Energy-with-OB.png); */
-  background-image: url(https://uwaterloo.ca/science/sites/ca.science/files/resize/uploads/images/sustainable-energy-solutions_0-1200x800.jpg);
-  background-size:cover;
-  opacity: .7;
-  background-position: center;
+  background-image: url(https://www.oceanblocks.org/assets/uploads/2021/01/Green-Energy-with-OB.png);
+  opacity: 1;
+  background-position:top;
+
   }
 
   .info {
