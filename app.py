@@ -60,18 +60,25 @@ def home():
             "co2_emissions<br/>"
             "primary_energy_cons")
 
+
+# A route for a list of all countries
 @app.route("/api/v1.0/countries")
 def countries():
     # Print out all the countries
     return jsonify(all_countries)
 
+
+# A route for the geojson used for the map data
 @app.route("/api/v1.0/countries_geojson")
 def country_geojson():
     return jsonify(countries_geojson)
 
+
+# A route for energy.json
 @app.route("/api/v1.0/data")
 def all_data():
 
+    # Define a list to jsonify
     complete_country_data = []
 
     for country_name in all_countries:
@@ -106,6 +113,7 @@ def all_data():
     return jsonify(complete_country_data)
 
 
+# A route for all data for a chosen country
 @app.route("/api/v1.0/country_data/<country_name>")
 def country_all_data(country_name):
 
@@ -146,9 +154,12 @@ def country_all_data(country_name):
         session.close()
         return jsonify({"Error": f"Country cannot be found. Try to use /api/v1.0/countries link for country names"}), 404
 
+
+# A route to return the data for a chosen country and the column wanted
 @app.route("/api/v1.0/country_data/<country_name>/<data>")
 def country_data(country_name, data):
 
+    # For access_to_elec column
     if (data == 'access_to_elec') and (country_name in all_countries):
         # Create our session (link) from Python to the DB
         session = Session(engine)
@@ -167,6 +178,7 @@ def country_data(country_name, data):
             country_data[0][country]['access_to_elec'][row[1]] = row[2]
         return jsonify(country_data)
 
+    # For elec_from_fossil column
     elif (data == 'elec_from_fossil') and (country_name in all_countries):
         # Create our session (link) from Python to the DB
         session = Session(engine)
@@ -185,6 +197,7 @@ def country_data(country_name, data):
             country_data[0][country]['elec_from_fossil'][row[1]] = row[2]
         return jsonify(country_data)
 
+    # For elec_from_new column
     elif (data == 'elec_from_renew') and (country_name in all_countries):
         # Create our session (link) from Python to the DB
         session = Session(engine)
@@ -203,6 +216,7 @@ def country_data(country_name, data):
             country_data[0][country]['elec_from_renew'][row[1]] = row[2]
         return jsonify(country_data)
 
+    # For low_carbon_elec column
     elif (data == 'low_carbon_elec') and (country_name in all_countries):
         # Create our session (link) from Python to the DB
         session = Session(engine)
@@ -222,6 +236,7 @@ def country_data(country_name, data):
             country_data[0][country]['low_carbon_elec'][row[1]] = row[2]
         return jsonify(country_data)
 
+    # For co2_emissions column
     elif (data == 'co2_emissions') and (country_name in all_countries):
         # Create our session (link) from Python to the DB
         session = Session(engine)
@@ -240,6 +255,7 @@ def country_data(country_name, data):
             country_data[0][country]['co2_emissions'][row[1]] = row[2]
         return jsonify(country_data)
 
+    # For primary_energy_cons column
     elif (data == 'primary_energy_cons') and (country_name in all_countries):
         # Create our session (link) from Python to the DB
         session = Session(engine)
