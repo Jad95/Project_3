@@ -24,15 +24,51 @@
   width: 40%;
 }
 
+
+/* Uncomment the code below and comment the #line-graph and #bar-chart code above
+ to have the bar graph for CO2 chart to show in the page */
+
+
+/* 
+#line-graph {
+  position: absolute;
+  top: 20%;
+  left: 55%;
+  bottom: 0%;
+  height: 30%;
+  width: 40%;
+}
+
+#bar-chart {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  bottom: 0%;
+  height: 30%;
+  width: 40%;
+} 
+
+  #co2chart {
+  position: absolute;
+  top: 80%;
+  left: 55%;
+  bottom: 0%;
+  height: 30%;
+  width: 40%;
+} */
+
+
 .text-head {
   text-align: center;
-  color:rgb(225, 255, 245);
+  /* -webkit-text-stroke: 1px rgb(0, 0, 0); */
+  color:rgb(42, 0, 194);
   text-shadow: dimgrey;
   text-decoration-line:inherit;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
 .title-head {
-  background-image: url(https://www.oceanblocks.org/assets/uploads/2021/01/Green-Energy-with-OB.png);
+  /* background-image: url(https://www.oceanblocks.org/assets/uploads/2021/01/Green-Energy-with-OB.png); */
+  background-image: url(https://uwaterloo.ca/science/sites/ca.science/files/resize/uploads/images/sustainable-energy-solutions_0-1200x800.jpg);
   background-size:cover;
   opacity: .7;
   background-position: center;
