@@ -279,14 +279,16 @@ function barchart(selected_country){
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////// Function for CO2 graph (Chartjs) ////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//Plot created using Chartjs   
 // Fetch and update the chart
-function co2chart(selected_country) {
-  fetch(dataLink)
-    .then(response => response.json())
-    .then(data => {
-      let years = Object.keys(data[0].year);
-      let co2 = [];
+d3.json(dataLink).then(function(data) {
+  console.log(data);
+});
+
+function co2chart(selected_country){
+  d3.json(dataLink).then(function(data) {
+    let years = Object.keys(data[0].year);
+    let co2 = [];
+
 
       for (let i = 0; i < data.length; i++) {
         if (data[i].country === selected_country) {
@@ -297,16 +299,16 @@ function co2chart(selected_country) {
         }
       }
 
-      // Create a horizontal bar chart using Chart.js
+      // Create a scatter plot using Chart.js
       var ctx = document.getElementById('co2chart').getContext('2d');
       var chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'scatter',
         data: {
           labels: years,
           datasets: [{
             label: 'CO2 Emissions in kt',
             data: co2,
-            borderWidth: 1
+            pointRadius: 5,
           }]
         },
         options: {
@@ -316,8 +318,10 @@ function co2chart(selected_country) {
           },
           scales: {
             xAxes: [{
+              type: 'linear',
+              position: 'bottom',
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
               },
               scaleLabel: {
                 display: true,
@@ -325,9 +329,12 @@ function co2chart(selected_country) {
               }
             }],
             yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              },
               scaleLabel: {
                 display: true,
-                labelString: 'Year'
+                labelString: 'CO2 Emissions (kt)'
               }
             }]
           }

@@ -26,8 +26,9 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <!-- ChartJS library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdnjs.com/libraries/Chart.js"></script>
+    <script src="https://www.jsdelivr.com/package/npm/chart.js?path=dis"></script>
+ 
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -38,11 +39,12 @@
       <div class="title-head">
         <div class="text-head">
           <h1>Global Sustainable Energy</h1>
-          <p>Any Text ------------</p>
-          <p>Any Text ---------------</p>
+          <h4>Explore the trends of access to electricity, CO2 emission, and the distribution of electricity sources<br/>
+            (fossil fuels and renewables) for different countries through 2000 to 2020</h4>
         </div>
       </div>
     </div>
+  
 
 
     <div id="map-container">
@@ -61,7 +63,8 @@
 </div>
 
   <div class="col-md-5">
-    <div id="co2chart"></div>
+    <!-- <div id="co2chart"></div> -->
+    <canvas id="co2chart"></canvas>
   </div>
 </div>
 
