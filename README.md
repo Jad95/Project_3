@@ -25,6 +25,7 @@ More and more country are on to renewable energy. South American countries are m
     Choropleth: https://leafletjs.com/examples/choropleth/
     Leaflet JS:  https://leafletjs.com
     Outside source: https://github.com/sundaritk/Project-Python-Flask/blob/master/Project_Proposal.pdf
+    GeoJSON: https://datahub.io/core/geo-countries
 
 
 
