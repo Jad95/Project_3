@@ -280,65 +280,65 @@ function barchart(selected_country){
 ///////////////////////// Function for CO2 graph (Chartjs) ////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch and update the chart
-d3.json(dataLink).then(function(data) {
-  console.log(data);
-});
+// d3.json(dataLink).then(function(data) {
+//   console.log(data);
+// });
 
-function co2chart(selected_country){
-  d3.json(dataLink).then(function(data) {
-    let years = Object.keys(data[0].year);
-    let co2 = [];
+// function co2chart(selected_country){
+//   d3.json(dataLink).then(function(data) {
+//     let years = Object.keys(data[0].year);
+//     let co2 = [];
 
 
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].country === selected_country) {
-          for (let j = 0; j < years.length; j++) {
-            co2.push(data[i].year[years[j]].co2_emissions);
-          }
-          break;
-        }
-      }
+//       for (let i = 0; i < data.length; i++) {
+//         if (data[i].country === selected_country) {
+//           for (let j = 0; j < years.length; j++) {
+//             co2.push(data[i].year[years[j]].co2_emissions);
+//           }
+//           break;
+//         }
+//       }
 
-      // Create a scatter plot using Chart.js
-      var ctx = document.getElementById('co2chart').getContext('2d');
-      var chart = new Chart(ctx, {
-        type: 'scatter',
-        data: {
-          labels: years,
-          datasets: [{
-            label: 'CO2 Emissions in kt',
-            data: co2,
-            pointRadius: 5,
-          }]
-        },
-        options: {
-          responsive: true,
-          legend: {
-            display: false
-          },
-          scales: {
-            xAxes: [{
-              type: 'linear',
-              position: 'bottom',
-              ticks: {
-                beginAtZero: true,
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'kt'
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'CO2 Emissions (kt)'
-              }
-            }]
-          }
-        }
-      });
-    })
-  };
+//       // Create a scatter plot using Chart.js
+//       var ctx = document.getElementById('co2chart').getContext('2d');
+//       var chart = new Chart(ctx, {
+//         type: 'scatter',
+//         data: {
+//           labels: years,
+//           datasets: [{
+//             label: 'CO2 Emissions in kt',
+//             data: co2,
+//             pointRadius: 5,
+//           }]
+//         },
+//         options: {
+//           responsive: true,
+//           legend: {
+//             display: false
+//           },
+//           scales: {
+//             xAxes: [{
+//               type: 'linear',
+//               position: 'bottom',
+//               ticks: {
+//                 beginAtZero: true,
+//               },
+//               scaleLabel: {
+//                 display: true,
+//                 labelString: 'kt'
+//               }
+//             }],
+//             yAxes: [{
+//               ticks: {
+//                 beginAtZero: true,
+//               },
+//               scaleLabel: {
+//                 display: true,
+//                 labelString: 'CO2 Emissions (kt)'
+//               }
+//             }]
+//           }
+//         }
+//       });
+//     })
+//   };

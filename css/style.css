@@ -6,7 +6,7 @@
   height: 77%;
   width: 50%;
 }
-/* #line-graph {
+#line-graph {
   position: absolute;
   top: 20%;
   left: 55%;
@@ -22,7 +22,7 @@
   bottom: 0%;
   height: 35%;
   width: 40%;
-} */
+}
 
 
 /* Uncomment the code below and comment the #line-graph and #bar-chart code above
@@ -30,7 +30,7 @@
 
 
 
-#line-graph {
+/* #line-graph {
   position: absolute;
   top: 20%;
   left: 55%;
@@ -55,7 +55,7 @@
   bottom: 0%;
   height: 30%;
   width: 40%;
-}
+} */
 
 
 .text-head {
