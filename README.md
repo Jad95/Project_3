@@ -1,5 +1,5 @@
 # Project_3 : Global Data on Sustainable Energy 
-by Amjad Abdullah, Cindy Hung Ling, Paolo Lubuguen, Raph Eric Caymo, Yohannes Daniel
+by Amjad Abdullah, Cindy Hung Ling, Paolo Lubuguen, Raph Eric Caymo, Yohannes Daniel, Muhaymin Raza
 
 # Objective:
 
